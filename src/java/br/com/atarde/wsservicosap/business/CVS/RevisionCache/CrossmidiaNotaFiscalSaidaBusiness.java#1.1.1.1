@@ -1,0 +1,99 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.CrossmidiaNotaFiscalSaidaDAO;
+import br.com.atarde.wsservicosap.model.AssinaturaNotaFiscalSaidaLinhaModel;
+import br.com.atarde.wsservicosap.model.CrossmidiaNotaFiscalSaidaModel;
+import br.com.atarde.wsservicosap.model.StatusModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.exception.TSSystemException;
+import br.com.topsys.util.TSUtil;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author mroland
+ */
+public class CrossmidiaNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusiness {
+
+    private CrossmidiaNotaFiscalSaidaModel nota;
+
+    public CrossmidiaNotaFiscalSaidaBusiness() {
+    }
+
+    public CrossmidiaNotaFiscalSaidaBusiness(CrossmidiaNotaFiscalSaidaModel crossmidiaNotaFiscalSaidaModel) {
+        this.nota = crossmidiaNotaFiscalSaidaModel;
+    }
+
+    @Override
+    public String validar() {
+
+        StringBuilder retorno = new StringBuilder();
+
+        AssinaturaNotaFiscalSaidaLinhaModel linha;
+
+        if (TSUtil.isEmpty(this.nota)) {
+
+            return Constantes.NOTAFISCAL;
+
+        } else {
+
+            retorno.append(this.validarGlobal(this.nota));
+
+            if ("".equals(retorno.toString())) {
+
+                if (this.nota.getOrigemModel().getId() != 12) {
+
+                    retorno.append(Constantes.OBJETO_ORIGEM_CROSSMIDIA + "\n");
+
+                }
+
+
+            }
+
+
+            return retorno.toString();
+
+        }
+
+    }
+
+    @Override
+    public String inserir() {
+
+        String retorno;
+
+        try {
+
+            this.nota.setStatusModel(new StatusModel(0L));
+
+            this.nota.setDataExportacao(new Date(System.currentTimeMillis()));
+
+            new CrossmidiaNotaFiscalSaidaDAO().inserir(this.nota);
+
+            retorno = null;
+
+        } catch (TSApplicationException ex) {
+
+            Logger.getLogger(CrossmidiaNotaFiscalSaidaBusiness.class.getName()).log(Level.SEVERE, null, ex);
+
+            retorno = Constantes.ERRO_TI;
+
+        } catch (TSSystemException ex) {
+
+            Logger.getLogger(CrossmidiaNotaFiscalSaidaBusiness.class.getName()).log(Level.SEVERE, null, ex);
+
+            retorno = Constantes.ERRO_TI;
+
+        }
+
+        return retorno;
+
+    }
+}

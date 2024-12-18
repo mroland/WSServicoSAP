@@ -1,0 +1,43 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.dao;
+
+import br.com.atarde.wsservicosap.model.NotaFiscalSaidaABModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.database.TSDataBaseBrokerIf;
+import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
+
+/**
+ *
+ * @author mroland
+ */
+public class NotaFiscalSaidaRadioDAO {
+
+    public NotaFiscalSaidaRadioDAO() {
+    }
+
+    public NotaFiscalSaidaABModel obter(NotaFiscalSaidaABModel model) {
+        
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("SELECT TOP 1 ID FROM (SELECT OINV.DOCENTRY AS ID FROM " + Constantes.BANCO_RADIO);
+        
+        sql.append(".DBO.OINV WITH(NOLOCK) WHERE NOT EXISTS ( SELECT 'X' FROM " + Constantes.BANCO_RADIO);
+        
+        sql.append(".DBO.ORIN WITH(NOLOCK) INNER JOIN " + Constantes.BANCO_RADIO);
+        
+        sql.append(".DBO.RIN1 WITH(NOLOCK) ON (ORIN.DOCENTRY = RIN1.DOCENTRY) WHERE ORIN.SEQCODE = 1 AND RIN1.BASEENTRY = OINV.DOCENTRY ) AND OINV.NUMATCARD = ? ");
+          
+        sql.append(" UNION ALL SELECT ID FROM INTEGRACAOSISTEMALEGADO.DBO.RADIO_NFF_SAIDA WITH(NOLOCK) WHERE ID_EXTERNO = ? AND ORIGEM_ID = ? ) AS A ");
+                
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+        
+        broker.setSQL(sql.toString(), model.getIdExterno(), model.getIdExterno(), model.getOrigemModel().getId());
+        
+        return (NotaFiscalSaidaABModel) broker.getObjectBean(NotaFiscalSaidaABModel.class, "id");
+        
+    }
+    
+}

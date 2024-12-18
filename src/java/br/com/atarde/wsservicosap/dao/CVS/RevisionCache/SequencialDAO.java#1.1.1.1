@@ -1,0 +1,33 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package br.com.atarde.wsservicosap.dao;
+
+import br.com.atarde.wsservicosap.model.SequencialModel;
+import br.com.topsys.database.TSDataBaseBrokerIf;
+import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
+import br.com.topsys.exception.TSApplicationException;
+
+/**
+ *
+ * @author mroland
+ */
+public class SequencialDAO {
+
+    public SequencialDAO() {
+    }
+
+    public SequencialModel inserir(SequencialModel model) throws TSApplicationException {
+
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+        broker.setPropertySQL("sequencialdao.inserir", model.getDescricao());
+
+        model.setId(broker.executeIdentity());
+
+        return model;
+    }
+
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/WSServicoSAP">
+    
+  <Resource auth="Container" driverClassName="net.sourceforge.jtds.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/SAPOProducaoDS" password="15rt01" type="javax.sql.DataSource" url="jdbc:jtds:sqlserver://SAPO:1433/SBO_JornalATarde_Producao" username="sa" validationQuery="select 1"/>
+  <Resource auth="Container" driverClassName="net.sourceforge.jtds.jdbc.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/SAP88TesteDS" password="1qaz2wsx" type="javax.sql.DataSource" url="jdbc:jtds:sqlserver://SAP88:1433/SBO_JornalATarde_Producao" username="sa" validationQuery="select 1"/>
+  <Manager className="org.apache.catalina.session.PersistentManager" pathname="" saveOnRestart="false">
+    <Store className="org.apache.catalina.session.FileStore"/>
+  </Manager>
+
+
+</Context>

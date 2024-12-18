@@ -1,0 +1,45 @@
+package br.com.atarde.wsservicosap.model;
+
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class ParceiroNegocioModel extends PessoaABModel implements Serializable {
+
+    //tabela OCRD
+    private String tipoParceiroNegocio;									//equivalente ao cardType
+    private String observacao;
+    private ParceiroNegocioContaBancoModel parceiroNegocioContaBancoModel;
+    private ContasReceberModel contasReceberModel;
+
+    public String getTipoParceiroNegocio() {
+        return tipoParceiroNegocio;
+    }
+
+    public void setTipoParceiroNegocio(String tipoParceiroNegocio) {
+        this.tipoParceiroNegocio = tipoParceiroNegocio;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public ParceiroNegocioContaBancoModel getParceiroNegocioContaBancoModel() {
+        return parceiroNegocioContaBancoModel;
+    }
+
+    public void setParceiroNegocioContaBancoModel(ParceiroNegocioContaBancoModel parceiroNegocioContaBancoModel) {
+        this.parceiroNegocioContaBancoModel = parceiroNegocioContaBancoModel;
+    }
+
+    public ContasReceberModel getContasReceberModel() {
+        return contasReceberModel;
+    }
+
+    public void setContasReceberModel(ContasReceberModel contasReceberModel) {
+        this.contasReceberModel = contasReceberModel;
+    }
+}

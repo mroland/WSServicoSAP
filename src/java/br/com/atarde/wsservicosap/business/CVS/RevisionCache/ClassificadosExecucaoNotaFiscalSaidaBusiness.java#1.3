@@ -1,0 +1,124 @@
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.ClassificadosExecucaoNotaFiscalSaidaDAO;
+import br.com.atarde.wsservicosap.model.ClassificadosExecucaoNotaFiscalSaidaLinhaModel;
+import br.com.atarde.wsservicosap.model.ClassificadosExecucaoNotaFiscalSaidaModel;
+import br.com.atarde.wsservicosap.model.StatusModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
+import java.util.List;
+
+
+public class ClassificadosExecucaoNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusiness {
+
+    private StringBuilder info;
+
+    private ClassificadosExecucaoNotaFiscalSaidaModel nota;
+
+    public ClassificadosExecucaoNotaFiscalSaidaBusiness() {
+    }
+
+    public ClassificadosExecucaoNotaFiscalSaidaBusiness(ClassificadosExecucaoNotaFiscalSaidaModel model) {
+
+        super(model);
+
+    }
+
+    @Override
+    public String validar() {
+
+        StringBuilder retorno = new StringBuilder();
+        
+        this.nota = (ClassificadosExecucaoNotaFiscalSaidaModel) super.getDocumento();
+
+        if (TSUtil.isEmpty(this.nota)) {
+
+            return Constantes.NOTAFISCAL;
+
+        } else {
+
+            retorno.append(this.validarGlobal(this.nota));
+
+            if ("".equals(retorno.toString())) {
+
+                if (this.nota.getOrigemModel().getId() != 8) {
+
+                    retorno.append(Constantes.OBJETO_ORIGEM_CLASSIFICADOS + "\n");
+
+                }
+               
+            }
+
+            return retorno.toString();
+
+
+        }
+
+    }
+
+    @Override
+    public String inserir() throws TSApplicationException {
+
+        String retorno;
+
+        this.nota.setStatusModel(new StatusModel(0L));
+
+        new ClassificadosExecucaoNotaFiscalSaidaDAO().inserir(this.nota);
+
+        retorno = null;
+
+        return retorno;
+
+    }
+
+    public List<ClassificadosExecucaoNotaFiscalSaidaModel> pesquisar(ClassificadosExecucaoNotaFiscalSaidaModel model) throws TSApplicationException {
+
+        this.info = new StringBuilder();
+
+        if (this.validarPesquisar(model)) {
+
+            return new ClassificadosExecucaoNotaFiscalSaidaDAO().pesquisar(model);
+
+        } else {
+
+            throw new TSApplicationException(this.info.toString());
+
+        }
+
+    }
+
+    private Boolean validarPesquisar(ClassificadosExecucaoNotaFiscalSaidaModel model) {
+
+        Boolean retorno = true;
+
+        if (TSUtil.isEmpty(model)) {
+
+            this.info.append(Constantes.CLASSIFICADOSEXECUCAONOTAFISCALSAIDAMODEL + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            retorno = false;
+
+        } else {
+
+            if (TSUtil.isEmpty(model.getOrigemModel())) {
+
+                if (!TSUtil.isEmpty(model.getOrigemModel().getId())) {
+
+                    if (model.getOrigemModel().getId() != 8) {
+
+                        this.info.append(Constantes.OBJETO_ORIGEM_CLASSIFICADOS + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+                        retorno = false;
+
+                    }
+
+                }
+
+            }
+        }
+
+        return retorno;
+
+    }
+
+}

@@ -1,0 +1,42 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.MunicipioRadioDAO;
+import br.com.atarde.wsservicosap.dao.MunicipioDAO;
+import br.com.atarde.wsservicosap.model.MunicipioModel;
+import br.com.atarde.wsservicosap.model.OrigemModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.util.TSUtil;
+
+/**
+ *
+ * @author mroland
+ */
+public class MunicipioBusiness {
+
+    private OrigemModel origemModel;
+
+    public MunicipioBusiness() {
+
+        this.origemModel = Constantes.ORIGEM;
+
+    }
+
+    public MunicipioModel obter(MunicipioModel model) {
+
+        if (!TSUtil.isEmpty(model)) {
+
+            if (Constantes.ORIGEM_RADIO.equals(this.origemModel.getId())) {
+
+                return new MunicipioRadioDAO().obter(model);
+
+            }
+        }
+
+        return new MunicipioDAO().obter(model);
+
+    }
+}

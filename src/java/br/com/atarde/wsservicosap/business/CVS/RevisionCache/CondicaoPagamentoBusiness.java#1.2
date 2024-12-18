@@ -1,0 +1,43 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.CondicaoPagamentoRadioDAO;
+import br.com.atarde.wsservicosap.dao.CondicaoPagamentoDAO;
+import br.com.atarde.wsservicosap.model.CondicaoPagamentoModel;
+import br.com.atarde.wsservicosap.model.OrigemModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
+
+/**
+ *
+ * @author mroland
+ */
+public class CondicaoPagamentoBusiness {
+
+    private OrigemModel origemModel;
+
+    public CondicaoPagamentoBusiness() {
+
+        this.origemModel = Constantes.ORIGEM;
+
+    }
+
+    public CondicaoPagamentoModel obter(CondicaoPagamentoModel model) {
+
+        if (!TSUtil.isEmpty(this.origemModel)) {
+
+            if (Constantes.ORIGEM_RADIO.equals(this.origemModel.getId())) {
+
+                return new CondicaoPagamentoRadioDAO().obter(model);
+            }
+
+        }
+
+        return new CondicaoPagamentoDAO().obter(model);
+
+    }
+}

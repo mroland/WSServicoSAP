@@ -1,0 +1,38 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.model.SequencialModel;
+import br.com.atarde.wsservicosap.dao.SequencialDAO;
+import br.com.topsys.exception.TSApplicationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author mroland
+ */
+public class SequencialBusiness {
+
+    public SequencialBusiness() {
+    }
+
+    public SequencialModel obterSequencia(SequencialModel model) {
+
+        try {
+
+            model.setDescricao("1");
+
+            return new SequencialDAO().inserir(model);
+            
+        } catch (TSApplicationException ex) {
+            Logger.getLogger(SequencialBusiness.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
+
+}

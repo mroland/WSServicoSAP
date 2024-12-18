@@ -1,0 +1,154 @@
+package br.com.atarde.wsservicosap.dao;
+
+import br.com.atarde.wsservicosap.model.EasyclassNotaFiscalSaidaLinhaModel;
+import br.com.atarde.wsservicosap.model.EasyclassNotaFiscalSaidaModel;
+import br.com.atarde.wsservicosap.model.NotaFiscalSaidaLinhaABModel;
+import br.com.topsys.database.TSDataBaseBrokerIf;
+import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
+import br.com.topsys.exception.TSApplicationException;
+import java.sql.Timestamp;
+import java.util.List;
+
+public class EasyclassNotaFiscalSaidaDAO {
+
+    public void inserir(EasyclassNotaFiscalSaidaModel model) throws TSApplicationException {
+
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+        broker.beginTransaction();
+
+        broker.setPropertySQL("easyclassnotafiscalsaidadao.inserir", model.getClienteModel().getIdentificadorFiscalModel().getTipoIdentificador(),
+                model.getClienteModel().getIdentificadorFiscalModel().getIdentificador(),
+                model.getClienteModel().getNome(),
+                model.getClienteModel().getNomeFantasia(),
+                model.getClienteModel().getTelefoneResidencial(),
+                model.getClienteModel().getTelefoneCelular(),
+                model.getClienteModel().getFax(),
+                model.getClienteModel().getEmail(),
+                model.getClienteModel().getObservacao(),
+                model.getClienteModel().getEnderecoModel().getLogradouro(),
+                model.getClienteModel().getEnderecoModel().getNumero(),
+                model.getClienteModel().getEnderecoModel().getComplemento(),
+                model.getClienteModel().getEnderecoModel().getBairro(),
+                model.getClienteModel().getEnderecoModel().getCidade(),
+                model.getClienteModel().getEnderecoModel().getEstado(),
+                model.getClienteModel().getEnderecoModel().getCep(),
+                model.getClienteModel().getEnderecoModel().getPais(),
+                model.getClienteModel().getEnderecoModel().getMunicipioModel().getId(),
+                model.getClienteModel().getIdentificadorFiscalModel().getInscricaoEstadual(),
+                model.getClienteModel().getIdentificadorFiscalModel().getInscricaoEstadualSubstitutoTributaria(),
+                model.getClienteModel().getIdentificadorFiscalModel().getInscricaoMunicipal(),
+                model.getClienteModel().getIdentificadorFiscalModel().getInscricaoINSS(),
+                model.getClienteModel().getDataAtualizacao(),
+                model.getClienteModel().getClassificacaoModel().getId(),
+                model.getClienteCobrancaModel().getIdentificadorFiscalModel().getTipoIdentificador(),
+                model.getClienteCobrancaModel().getIdentificadorFiscalModel().getIdentificador(),
+                model.getClienteCobrancaModel().getNome(),
+                model.getClienteCobrancaModel().getNomeFantasia(),
+                model.getClienteCobrancaModel().getTelefoneResidencial(),
+                model.getClienteCobrancaModel().getTelefoneCelular(),
+                model.getClienteCobrancaModel().getFax(),
+                model.getClienteCobrancaModel().getEmail(),
+                model.getClienteCobrancaModel().getObservacao(),
+                model.getClienteCobrancaModel().getEnderecoModel().getLogradouro(),
+                model.getClienteCobrancaModel().getEnderecoModel().getNumero(),
+                model.getClienteCobrancaModel().getEnderecoModel().getComplemento(),
+                model.getClienteCobrancaModel().getEnderecoModel().getBairro(),
+                model.getClienteCobrancaModel().getEnderecoModel().getCidade(),
+                model.getClienteCobrancaModel().getEnderecoModel().getEstado(),
+                model.getClienteCobrancaModel().getEnderecoModel().getCep(),
+                model.getClienteCobrancaModel().getEnderecoModel().getPais(),
+                model.getClienteCobrancaModel().getEnderecoModel().getMunicipioModel().getId(),
+                model.getClienteCobrancaModel().getIdentificadorFiscalModel().getInscricaoEstadual(),
+                model.getClienteCobrancaModel().getIdentificadorFiscalModel().getInscricaoEstadualSubstitutoTributaria(),
+                model.getClienteCobrancaModel().getIdentificadorFiscalModel().getInscricaoMunicipal(),
+                model.getClienteCobrancaModel().getIdentificadorFiscalModel().getInscricaoINSS(),
+                model.getClienteCobrancaModel().getDataAtualizacao(),
+                model.getClienteCobrancaModel().getClassificacaoModel().getId(),
+                model.getVendedorModel().getIdentificadorFiscalModel().getTipoIdentificador(),
+                model.getVendedorModel().getIdentificadorFiscalModel().getIdentificador(),
+                model.getVendedorModel().getNome(),
+                model.getVendedorModel().getDataAtualizacao(),
+                model.getVendedorModel().getGrupoComissaoModel().getId(),
+                model.getIdExterno(),
+                model.getOrigemModel().getId(),
+                model.getDataLancamento(),
+                model.getDataDocumento(),
+                model.getDataVencimento(),
+                model.getCondicaoPagamentoModel().getId(),
+                model.getuValorBruto(),
+                model.getUComissaoAgencia(),
+                model.getValorLiquido(),
+                model.getDataCriacao(),
+                model.getDataAtualizacao(),
+                model.getCriadoPor(),
+                model.getAtualizadoPor(),
+                new Timestamp(System.currentTimeMillis()),
+                model.getUDiasPublicacao(),
+                model.getUDataPublicacaoFinal(),
+                model.getuEnderecoEntrega(),
+                model.getSequenciaModel().getId(),
+                model.getUTituloPublicacao(),
+                model.getStatusModel().getId(),
+                model.getUNumeroPI(),
+                model.getUTipoTransacao(),
+                model.getUPeriodo(),
+                model.getUPageViews(),
+                model.getUFormato(),
+                model.getUEntregaVendedor(),
+                model.getUProduto(),
+                model.getUCampanha(),
+                model.getUPostoId(),
+                model.getUDataPublicacaoInicial(),
+                model.getVendedorModel().getUCga());
+
+        model.setId(broker.executeIdentity());
+
+        for (NotaFiscalSaidaLinhaABModel item : model.getNotaFiscalSaidaLinhaModelList()) {
+
+            EasyclassNotaFiscalSaidaLinhaModel easyclassNotaFiscalLinhaModel = (EasyclassNotaFiscalSaidaLinhaModel) item;
+
+            easyclassNotaFiscalLinhaModel.setNotaFiscalSaidaModel(model);
+
+            this.EasyclassNotaFiscalSaidaLinhaInserir(easyclassNotaFiscalLinhaModel, broker);
+
+        }
+
+        broker.endTransaction();
+
+    }
+
+    private void EasyclassNotaFiscalSaidaLinhaInserir(EasyclassNotaFiscalSaidaLinhaModel model, TSDataBaseBrokerIf broker) throws TSApplicationException {
+
+        broker.setPropertySQL("easyclassnotafiscalsaidalinhadao.inserir", model.getItemModel().getId(),
+                model.getQuantidade(),
+                model.getValorUnitario(),
+                model.getValor(),
+                model.getCodigoImpostoModel().getId(),
+                model.getNotaFiscalSaidaModel().getId(),
+                model.getuCmXCol(),
+                model.getuArea(),
+                model.getuQuantidadeInsercoes(),
+                model.getuTotalCmXCol(),
+                model.getuValorUnitario(),
+                model.getCstCOFINSModel().getCodigo(),
+                model.getCstICMSModel().getCodigo(),
+                model.getCstIPIModel().getCodigo(),
+                model.getCstPISModel().getCodigo(),
+                model.getUtilizacaoModel().getId());
+
+        broker.execute();
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<EasyclassNotaFiscalSaidaModel> pesquisar(EasyclassNotaFiscalSaidaModel model) {
+
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+
+        broker.setPropertySQL("easyclassnotafiscalsaidadao.pesquisar", model.getIdExterno(), model.getOrigemModel().getId());
+
+        return broker.getCollectionBean(EasyclassNotaFiscalSaidaModel.class, "id", "idExterno", "origemModel.id", "statusModel.id", "statusModel.descricao", "mensagemErroImportacao", "dataExportacao", "dataImportacao");
+
+    }
+}

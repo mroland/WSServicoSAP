@@ -1,0 +1,43 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.CodigoImpostoRadioDAO;
+import br.com.atarde.wsservicosap.dao.CodigoImpostoDAO;
+import br.com.atarde.wsservicosap.model.CodigoImpostoModel;
+import br.com.atarde.wsservicosap.model.OrigemModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
+
+/**
+ *
+ * @author mroland
+ */
+public class CodigoImpostoBusiness {
+
+    private OrigemModel origemModel;
+
+    public CodigoImpostoBusiness() {
+
+        this.origemModel = Constantes.ORIGEM;
+    }
+
+    public CodigoImpostoModel obter(CodigoImpostoModel model) {
+
+        if (!TSUtil.isEmpty(this.origemModel)) {
+
+            if (Constantes.ORIGEM_RADIO.equals(this.origemModel.getId())) {
+
+                return new CodigoImpostoRadioDAO().obter(model);
+
+            }
+
+        }
+
+        return new CodigoImpostoDAO().obter(model);
+
+    }
+}

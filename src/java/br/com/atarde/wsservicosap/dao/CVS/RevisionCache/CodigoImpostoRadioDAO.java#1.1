@@ -1,0 +1,35 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.dao;
+
+import br.com.atarde.wsservicosap.model.CodigoImpostoModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.database.TSDataBaseBrokerIf;
+import br.com.topsys.database.factory.TSDataBaseBrokerFactory;
+
+/**
+ *
+ * @author mroland
+ */
+public class CodigoImpostoRadioDAO {
+
+    public CodigoImpostoRadioDAO() {
+    }
+
+    public CodigoImpostoModel obter(CodigoImpostoModel model) {
+        
+        StringBuilder sql = new StringBuilder();
+        
+        sql.append("SELECT CODE FROM " + Constantes.BANCO_RADIO + ".DBO.OSTC WITH(NOLOCK) WHERE CODE = ? ");
+                     
+        TSDataBaseBrokerIf broker = TSDataBaseBrokerFactory.getDataBaseBrokerIf();
+        
+        broker.setSQL(sql.toString(), model.getId());
+
+        return (CodigoImpostoModel) broker.getObjectBean(CodigoImpostoModel.class, "id");
+
+    }
+    
+}

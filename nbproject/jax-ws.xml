@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="ContasReceberInterfaceWebService">
+      <implementation-class>br.com.atarde.wsservicosap.wsdl.ContasReceberInterfaceWebService</implementation-class>
+    </service>
+    <service name="DevolucaoNotaFiscalSaidaWebService">
+      <implementation-class>br.com.atarde.wsservicosap.wsdl.DevolucaoNotaFiscalSaidaWebService</implementation-class>
+    </service>
+    <service name="ContasReceberBoletoRejeitadoWebService">
+      <implementation-class>br.com.atarde.wsservicosap.wsdl.ContasReceberBoletoRejeitadoWebService</implementation-class>
+    </service>
+    <service name="NotaFiscalSaidaWebService">
+      <implementation-class>br.com.atarde.wsservicosap.wsdl.NotaFiscalSaidaWebService</implementation-class>
+    </service>
+    <service name="SaidaMercadoriaWebService">
+      <implementation-class>br.com.atarde.wsservicosap.wsdl.SaidaMercadoriaWebService</implementation-class>
+    </service>
+    <service name="ContasReceberWebService">
+      <implementation-class>br.com.atarde.wsservicosap.wsdl.ContasReceberWebService</implementation-class>
+    </service>
+  </services>
+  <clients/>
+  <jsr109>false</jsr109>
+</jax-ws>

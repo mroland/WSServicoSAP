@@ -1,0 +1,43 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.SequenciaRadioDAO;
+import br.com.atarde.wsservicosap.dao.SequenciaDAO;
+import br.com.atarde.wsservicosap.model.OrigemModel;
+import br.com.atarde.wsservicosap.model.SequenciaModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
+
+/**
+ *
+ * @author mroland
+ */
+public class SequenciaBusiness {
+
+    private OrigemModel OrigemModel;
+
+    public SequenciaBusiness() {
+
+        this.OrigemModel = Constantes.ORIGEM;
+
+    }
+
+    public SequenciaModel obter(SequenciaModel model) {
+
+        if (!TSUtil.isEmpty(this.OrigemModel)) {
+
+            if (Constantes.ORIGEM_RADIO.equals(this.OrigemModel.getId())) {
+
+                return new SequenciaRadioDAO().obter(model);
+                
+            }
+
+        }
+
+        return new SequenciaDAO().obter(model);
+    }
+}

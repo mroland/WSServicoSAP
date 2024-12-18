@@ -1,0 +1,409 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.ClassificacaoDAO;
+import br.com.atarde.wsservicosap.dao.NotaFiscalSaidaDAO;
+import br.com.atarde.wsservicosap.model.CondicaoPagamentoModel;
+import br.com.atarde.wsservicosap.model.EnderecoABModel;
+import br.com.atarde.wsservicosap.model.MunicipioModel;
+import br.com.atarde.wsservicosap.model.NotaFiscalSaidaLinhaABModel;
+import br.com.atarde.wsservicosap.model.NotaFiscalSaidaABModel;
+import br.com.atarde.wsservicosap.model.PessoaABModel;
+import br.com.atarde.wsservicosap.model.VendedorModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.exception.TSApplicationException;
+import br.com.topsys.util.TSUtil;
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ *
+ * @author mroland
+ */
+public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
+
+    private StringBuilder info;
+
+    public NotaFiscalSaidaBusiness() {
+    }
+
+    public NotaFiscalSaidaBusiness(NotaFiscalSaidaABModel model) {
+
+        super(model);
+
+    }
+
+    protected String validarGlobal(NotaFiscalSaidaABModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        retorno.append(super.validarGlobal(model));
+
+        retorno.append(this.validaCliente(model.getClienteCobrancaModel()));
+
+        retorno.append(this.validaVendedor(model.getVendedorModel()));
+
+        retorno.append(this.validaNFF(model));
+
+        return retorno.toString();
+
+    }
+
+    protected String validaCliente(PessoaABModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        if (TSUtil.isEmpty(model)) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_CLIENTE + "\n");
+
+        } else {
+
+            retorno.append(this.validaPessoa(model));
+
+            if (TSUtil.isEmpty(model.getClassificacaoModel()) || (model.getClassificacaoModel().getId() == 0) || (TSUtil.isEmpty(new ClassificacaoDAO().obter(model.getClassificacaoModel())))) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_CLASSIFICACAO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            }
+
+            if (TSUtil.isEmpty(model.getEnderecoModel())) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO + "\n");
+
+            } else {
+
+                retorno.append(this.validaEndereco(model.getEnderecoModel()));
+
+            }
+
+        }
+
+        return retorno.toString();
+
+    }
+
+    private String validaPessoa(PessoaABModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        if ((TSUtil.isEmpty(model.getIdentificadorFiscalModel())) || TSUtil.isEmpty(model.getIdentificadorFiscalModel().getTipoIdentificador())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_TIPO_IDENTIFICADOR + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if ((TSUtil.isEmpty(model.getIdentificadorFiscalModel())) || TSUtil.isEmpty(model.getIdentificadorFiscalModel().getIdentificador())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_IDENTIFICADOR + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        } else {
+
+            model.getIdentificadorFiscalModel().setIdentificador(model.getIdentificadorFiscalModel().getIdentificador().replace(".", "").replace("/", "").replace("-", ""));
+
+        }
+
+        if (TSUtil.isEmpty(model.getNome())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_NOME + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getDataAtualizacao())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_DATA_ATUALIZACAO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        return retorno.toString();
+    }
+
+    private String validaVendedor(VendedorModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        if (TSUtil.isEmpty(model)) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_VENDEDOR + "\n");
+
+        } else {
+
+            retorno.append(this.validaPessoa(model));
+
+            if (TSUtil.isEmpty(model.getGrupoComissaoModel()) || (TSUtil.isEmpty(model.getGrupoComissaoModel().getId()) || model.getGrupoComissaoModel().getId()==0)) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_GRUPO_COMISSAO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            }
+            
+            if(!TSUtil.isEmpty(model.getUCga())){
+                
+                model.setUCga(model.getUCga().replace(".", "").replace("/", "").replace("\\", "").replace("-", ""));                
+                
+                if(model.getUCga().length()>20){
+                    
+                    model.setUCga(model.getUCga().substring(0, 20));
+                    
+                }
+                                
+            }
+
+        }
+
+        return retorno.toString();
+
+    }
+
+    private String validaEndereco(EnderecoABModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        if (TSUtil.isEmpty(model.getLogradouro())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_LOGRADOURO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getNumero())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_NUMERO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getBairro())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_BAIRRO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getCidade())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_CIDADE + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getEstado())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_ESTADO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getCep())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_CEP + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getPais())) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_ENDERECO_PAIS + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (!TSUtil.isEmpty(model.getEstado()) && (!TSUtil.isEmpty(model.getCidade())) && (!TSUtil.isEmpty(model.getPais()))) {
+
+            MunicipioModel municipioModel = new MunicipioBusiness(this.getJndi()).obter(new MunicipioModel(model));
+
+            if (TSUtil.isEmpty(municipioModel)) {
+
+                retorno.append(Constantes.MUNICIPIO_INEXISTENTE + "\n");
+
+            } else {
+
+                model.setMunicipioModel(municipioModel);
+
+            }
+
+        }
+
+        return retorno.toString();
+    }
+
+    private String validaNFF(NotaFiscalSaidaABModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        if (TSUtil.isEmpty(model)) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL + "\n");
+
+        } else {
+
+            if (!TSUtil.isEmpty(this.obter(model))) {
+
+                retorno.append(Constantes.NOTAFISCALEXPORTADA + "\n");
+
+            }
+
+            if (TSUtil.isEmpty(model.getuValorBruto()) || (model.getuValorBruto().equals(BigDecimal.ZERO))) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_VALOR_BRUTO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            }
+
+            if (TSUtil.isEmpty(model.getValorLiquido()) || (model.getValorLiquido().equals(BigDecimal.ZERO))) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_VALOR_LIQUIDO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            }
+
+            if (TSUtil.isEmpty(model.getNotaFiscalSaidaLinhaModelList())) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA + "\n");
+
+            } else {
+
+                for (NotaFiscalSaidaLinhaABModel item : model.getNotaFiscalSaidaLinhaModelList()) {
+
+                    retorno.append(this.validaLinhaNFF(item));
+
+                }
+
+            }
+
+            if (TSUtil.isEmpty(model.getDataVencimento())) {
+
+                if (TSUtil.isEmpty(model.getCondicaoPagamentoModel()) || (TSUtil.isEmpty(model.getCondicaoPagamentoModel().getId())) || (model.getCondicaoPagamentoModel().getId() == 0) || (TSUtil.isEmpty(new CondicaoPagamentoBusiness(this.getJndi()).obter(model.getCondicaoPagamentoModel())))) {
+
+                    retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_CONDICAO_PAGAMENTO_DATA_VENCIMENTO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+                }
+
+            } else {
+
+                model.setCondicaoPagamentoModel(new CondicaoPagamentoModel());
+
+            }
+
+            if (TSUtil.isEmpty(model.getuEnderecoEntrega()) || (model.getuEnderecoEntrega().equals(""))) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_U_ENDERECO_ENTREGA + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            }
+
+            if (TSUtil.isEmpty(model.getSequenciaModel()) || TSUtil.isEmpty(model.getSequenciaModel().getId()) || (model.getSequenciaModel().getId() == 0L)) {
+
+                retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_SERVICO + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            } else {
+
+                if (TSUtil.isEmpty(new SequenciaBusiness(this.getJndi()).obter(model.getSequenciaModel()))) {
+
+                    retorno.append(Constantes.SEQUENCIA_INEXISTENTE + "\n");
+
+                }
+            }
+
+        }
+
+        return retorno.toString();
+
+    }
+
+    private String validaLinhaNFF(NotaFiscalSaidaLinhaABModel model) {
+
+        StringBuilder retorno = new StringBuilder();
+
+        if (TSUtil.isEmpty(model.getItemModel()) || (TSUtil.isEmpty(model.getItemModel().getId()))) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_ITEM + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        } else {
+
+            if (TSUtil.isEmpty(new ItemBusiness(this.getJndi()).obter(model.getItemModel()))) {
+
+                retorno.append(Constantes.ITEM_INEXISTENTE + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            }
+        }
+
+        if (TSUtil.isEmpty(model.getQuantidade()) || (model.getQuantidade() == 0)) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_QUANTIDADE + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        if (TSUtil.isEmpty(model.getValor()) || (model.getValor().equals(BigDecimal.ZERO))) {
+
+            retorno.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCALSAIDA_LINHA_VALOR + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+        }
+
+        return retorno.toString();
+    }
+
+    public List<NotaFiscalSaidaABModel> pesquisarTotalmenteAberta(NotaFiscalSaidaABModel model) throws TSApplicationException {
+
+        List<NotaFiscalSaidaABModel> lista;
+
+        if (this.validar(model)) {
+
+            lista = new NotaFiscalSaidaDAO().pesquisarTotalmenteAberta(model);
+
+        } else {
+
+            throw new TSApplicationException(this.info.toString());
+
+        }
+
+        return lista;
+    }
+
+    private Boolean validar(NotaFiscalSaidaABModel model) {
+
+        Boolean retorno = true;
+
+        info = new StringBuilder();
+
+        if (TSUtil.isEmpty(model.getOrigemModel())) {
+
+            info.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_ORIGEM + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+            retorno = false;
+
+        } else {
+
+            if (TSUtil.isEmpty(model.getOrigemModel().getId())) {
+
+                info.append(Constantes.OBJETO_OBRIGATORIO_NOTAFISCAL_ORIGEM + Constantes.CAMPO_OBRIGATORIO + "\n");
+
+                retorno = false;
+
+            }
+
+
+        }
+
+        return retorno;
+
+    }
+
+    @Override
+    public String validar() {
+        return null;
+    }
+
+    @Override
+    public String inserir() throws TSApplicationException {
+        return null;
+    }
+
+    @Override
+    public String validarExcluir() {
+        return null;
+    }
+
+    @Override
+    public String excluir() throws TSApplicationException {
+        return null;
+    }
+
+    public NotaFiscalSaidaABModel obter(NotaFiscalSaidaABModel model) {
+
+        return new NotaFiscalSaidaDAO().obter(model, this.getJndi());
+
+    }
+}

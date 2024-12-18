@@ -1,0 +1,66 @@
+package br.com.atarde.wsservicosap.model;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+@SuppressWarnings("serial")
+public class RadioNotaFiscalSaidaModel extends NotaFiscalSaidaABModel implements Serializable{
+
+    private ParceiroNegocioModel clienteModel;
+    private BigDecimal uComissaoAgencia;
+    private String uNumeroPI;
+    private Date uDataContrato;
+    private String uPeriodoVeiculacao;
+    private String uTipoTransacao;    
+
+    public BigDecimal getuComissaoAgencia() {
+        return uComissaoAgencia;
+    }
+
+    public void setuComissaoAgencia(BigDecimal uComissaoAgencia) {
+        this.uComissaoAgencia = uComissaoAgencia;
+    }
+
+    public ParceiroNegocioModel getClienteModel() {
+        return clienteModel;
+    }
+
+    public void setClienteModel(ParceiroNegocioModel clienteModel) {
+        this.clienteModel = clienteModel;
+    }
+
+    public String getUNumeroPI() {
+        return uNumeroPI;
+    }
+
+    public void setUNumeroPI(String uNumeroPI) {
+        this.uNumeroPI = uNumeroPI;
+    }
+
+    public Date getuDataContrato() {
+        return uDataContrato;
+    }
+
+    public void setuDataContrato(Date uDataContrato) {
+        this.uDataContrato = uDataContrato;
+    }
+
+    public String getuPeriodoVeiculacao() {
+        return uPeriodoVeiculacao;
+    }
+
+    public void setuPeriodoVeiculacao(String uPeriodoVeiculacao) {
+        this.uPeriodoVeiculacao = uPeriodoVeiculacao;
+    }
+    public String getUTipoTransacao() {
+        return uTipoTransacao;
+    }
+
+    public void setUTipoTransacao(String uTipoTransacao) {
+        this.uTipoTransacao = uTipoTransacao;
+    }
+
+
+
+}

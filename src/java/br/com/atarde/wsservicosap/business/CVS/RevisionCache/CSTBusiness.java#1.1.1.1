@@ -1,0 +1,26 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.CSTDAO;
+import br.com.atarde.wsservicosap.model.CSTModel;
+
+/**
+ *
+ * @author mroland
+ */
+public class CSTBusiness {
+
+    public CSTBusiness() {
+    }
+
+    public CSTModel obterPeloCodigo(CSTModel model){
+
+        return new CSTDAO().obterPeloCodigo(model);
+
+    }
+
+}

@@ -1,0 +1,44 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package br.com.atarde.wsservicosap.business;
+
+import br.com.atarde.wsservicosap.dao.CategoriaRadioDAO;
+import br.com.atarde.wsservicosap.dao.CategoriaDAO;
+import br.com.atarde.wsservicosap.model.CategoriaModel;
+import br.com.atarde.wsservicosap.model.OrigemModel;
+import br.com.atarde.wsservicosap.util.Constantes;
+import br.com.topsys.util.TSUtil;
+import br.com.topsys.web.util.TSFacesUtil;
+
+/**
+ *
+ * @author mroland
+ */
+public class CategoriaBusiness {
+
+    private OrigemModel origemModel;
+
+    public CategoriaBusiness() {
+
+        this.origemModel = Constantes.ORIGEM;
+
+    }
+
+    public CategoriaModel obterPeloCodigo(CategoriaModel model) {
+
+        if (!TSUtil.isEmpty(this.origemModel)) {
+
+            if (Constantes.ORIGEM_RADIO.equals(this.origemModel.getId())) {
+
+                return new CategoriaRadioDAO().obterPeloCodigo(model);
+
+            }
+
+        }
+
+        return new CategoriaDAO().obterPeloCodigo(model);
+
+    }
+}

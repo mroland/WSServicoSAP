@@ -1,0 +1,76 @@
+package br.com.atarde.wsservicosap.model;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+@SuppressWarnings("serial")
+public class EasyclassNotaFiscalSaidaModel extends NotaFiscalSaidaABModel{
+
+    private ParceiroNegocioModel clienteModel;
+    private BigDecimal uComissaoAgencia;
+    private String uDiasPublicacao;
+    private Date uDataPublicacaoFinal;
+    private String uTituloPublicacao;
+    private String uNumeroPI;
+    private String uTipoTransacao;
+
+    public BigDecimal getuComissaoAgencia() {
+        return uComissaoAgencia;
+    }
+
+    public void setuComissaoAgencia(BigDecimal uComissaoAgencia) {
+        this.uComissaoAgencia = uComissaoAgencia;
+    }
+
+    public Date getuDataPublicacaoFinal() {
+        return uDataPublicacaoFinal;
+    }
+
+    public void setuDataPublicacaoFinal(Date uDataPublicacaoFinal) {
+        this.uDataPublicacaoFinal = uDataPublicacaoFinal;
+    }
+
+    public String getuDiasPublicacao() {
+        return uDiasPublicacao;
+    }
+
+    public void setuDiasPublicacao(String uDiasPublicacao) {
+        this.uDiasPublicacao = uDiasPublicacao;
+    }
+
+    public ParceiroNegocioModel getClienteModel() {
+        return clienteModel;
+    }
+
+    public void setClienteModel(ParceiroNegocioModel clienteModel) {
+        this.clienteModel = clienteModel;
+    }
+
+    public String getUTituloPublicacao() {
+        return uTituloPublicacao;
+    }
+
+    public void setUTituloPublicacao(String uTituloPublicacao) {
+        this.uTituloPublicacao = uTituloPublicacao;
+    }
+
+    public String getUNumeroPI() {
+        return uNumeroPI;
+    }
+
+    public void setUNumeroPI(String uNumeroPI) {
+        this.uNumeroPI = uNumeroPI;
+    }
+
+    public String getUTipoTransacao() {
+        return uTipoTransacao;
+    }
+
+    public void setUTipoTransacao(String uTipoTransacao) {
+        this.uTipoTransacao = uTipoTransacao;
+    }
+
+
+    
+    
+}
