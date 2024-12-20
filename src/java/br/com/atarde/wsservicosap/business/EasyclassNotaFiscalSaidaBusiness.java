@@ -142,7 +142,7 @@ public class EasyclassNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusiness {
                     this.nota.setUPermuta(0);
                 }
 
-                if (!TSUtil.isEmpty(this.nota.getNotaFiscalSaidaLinhaModelList())) {
+                if (!TSUtil.isEmpty(this.nota.getNotaFiscalSaidaLinhaModelList()) && TSUtil.isEmpty(retorno.toString())) {
 
                     for (NotaFiscalSaidaLinhaABModel item : this.nota.getNotaFiscalSaidaLinhaModelList()) {
 

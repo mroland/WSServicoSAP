@@ -115,7 +115,7 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusiness {
                     this.nota.setUPermuta(0);
                 }
                 
-                if (!TSUtil.isEmpty(this.nota.getNotaFiscalSaidaLinhaModelList())) {
+                if (!TSUtil.isEmpty(this.nota.getNotaFiscalSaidaLinhaModelList()) && TSUtil.isEmpty(retorno.toString())) {
                     
                     for (NotaFiscalSaidaLinhaABModel item : this.nota.getNotaFiscalSaidaLinhaModelList()) {
                         
@@ -223,7 +223,7 @@ public class RadioNotaFiscalSaidaBusiness extends NotaFiscalSaidaBusiness {
 
                         linha.setEstoqueModel(new EstoqueModel());
                         
-                        linha.getEstoqueModel().setId("199");
+                        linha.getEstoqueModel().setId("299");
 
                         // linha.getCodigoImpostoModel().setId("PUB-001"); colocavam fixo
                         // linha.getCodigoImpostoModel().setId("5102-001"); //teste apenas

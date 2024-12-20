@@ -1,6 +1,5 @@
 package br.com.atarde.wsservicosap.dao;
 
-import br.com.atarde.wsservicosap.model.ClassificadosContratoNotaFiscalSaidaModel;
 import br.com.atarde.wsservicosap.model.ClassificadosExecucaoNotaFiscalSaidaLinhaModel;
 import br.com.atarde.wsservicosap.model.ClassificadosExecucaoNotaFiscalSaidaModel;
 import br.com.atarde.wsservicosap.model.NotaFiscalSaidaLinhaABModel;
