@@ -33,6 +33,7 @@ import br.com.atarde.wsservicosap.model.NotaFiscalSaidaABModel;
 import br.com.atarde.wsservicosap.model.PaisModel;
 import br.com.atarde.wsservicosap.model.ParceiroNegocioEnderecoModel;
 import br.com.atarde.wsservicosap.model.ParceiroNegocioModel;
+import br.com.atarde.wsservicosap.model.SequenciaModel;
 import br.com.atarde.wsservicosap.model.UtilizacaoModel;
 import br.com.atarde.wsservicosap.model.VendedorModel;
 import br.com.atarde.wsservicosap.util.Constantes;
@@ -96,6 +97,9 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
             retorno.append(Constantes.OBJETO_OBRIGATORIO_CLIENTE + "\n");
 
         } else {
+            
+            model.setId(null);
+            //colocado isso pois do easyclass esta vindo setado nao sei por que 
 
             if (!TSUtil.isEmpty(Utilitarios.tratarString(model.getId()))) {
 
@@ -626,6 +630,10 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
                         model.setuEnderecoEntrega(model.getuEnderecoEntrega().toUpperCase());
 
                     }
+                    
+                    model.setSequenciaModel(new SequenciaModel());
+                   model.getSequenciaModel().setId(28L);
+                    //feito isso pois nao sei de onde vem a sequencia
 
                     if (!TSUtil.isEmpty(model.getSequenciaModel())) {
 
@@ -704,6 +712,9 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
             retorno.append(Constantes.OBJETO_OBRIGATORIO_LINHA_UTILIZACAO + Constantes.CAMPO_OBRIGATORIO + "\n");
 
         }
+        
+        model.setCodigoImpostoModel(new CodigoImpostoModel());
+        //colocado isso por que nao sei onde vem o JAT002
 
         if ((!TSUtil.isEmpty(Utilitarios.tratarString(model.getCodigoImpostoModel().getId())) && TSUtil.isEmpty(new CodigoImpostoDAO().obter(new CodigoImpostoModel("id", model.getCodigoImpostoModel().getId(), model.getEmpresaModel()))))) {
 
