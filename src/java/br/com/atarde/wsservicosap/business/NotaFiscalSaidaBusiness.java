@@ -97,7 +97,7 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
             retorno.append(Constantes.OBJETO_OBRIGATORIO_CLIENTE + "\n");
 
         } else {
-            
+
             model.setId(null);
             //colocado isso pois do easyclass esta vindo setado nao sei por que 
 
@@ -329,7 +329,7 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
             if (model.getTelefoneCelular().length() > 15) {
 
                 retorno.append(Constantes.PARCEIRO_NEGOCIO_TELEFONE_CELULAR + "\n");
-                
+
             } else {
 
                 model.setTelefoneCelular(model.getTelefoneCelular().replace(".", "").replace("/", "").replace("-", "").replace("|", "").replace("\\", "").replace("(", "").replace(")", "").replaceAll(" ", ""));
@@ -617,6 +617,12 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
 
                     } else {
 
+                        if (!TSUtil.isEmpty(model.getDataDocumento()) && model.getDataDocumento().after(model.getDataVencimento())) {
+
+                            retorno.append(Constantes.OBJETO_NOTAFISCAL_DATA_VENCIMENTO_MENOR_DATA_DOCUMENTO + "\n");
+
+                        }
+
                         model.setCondicaoPagamentoModel(new CondicaoPagamentoModel());
 
                     }
@@ -630,9 +636,9 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
                         model.setuEnderecoEntrega(model.getuEnderecoEntrega().toUpperCase());
 
                     }
-                    
+
                     model.setSequenciaModel(new SequenciaModel());
-                   model.getSequenciaModel().setId(28L);
+                    model.getSequenciaModel().setId(28L);
                     //feito isso pois nao sei de onde vem a sequencia
 
                     if (!TSUtil.isEmpty(model.getSequenciaModel())) {
@@ -712,7 +718,7 @@ public class NotaFiscalSaidaBusiness extends DocumentoABBusiness {
             retorno.append(Constantes.OBJETO_OBRIGATORIO_LINHA_UTILIZACAO + Constantes.CAMPO_OBRIGATORIO + "\n");
 
         }
-        
+
         model.setCodigoImpostoModel(new CodigoImpostoModel());
         //colocado isso por que nao sei onde vem o JAT002
 

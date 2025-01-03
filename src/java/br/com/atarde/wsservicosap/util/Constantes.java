@@ -192,7 +192,7 @@ public class Constantes {
     public static final String PARCEIRO_NEGOCIO_TELEFONE_CELULAR = "Favor inserir atributo parceiroNegocio.celular com tamanho limite: 15 caracteres.";
 
     public static final String PARCEIRO_NEGOCIO_TELEFONE_OBRIGATORIO = "Favor inserir atributo parceiroNegocio.celular ou parceiroNegocio.telefoneResidencial.";
-    
+
     public static final String PARCEIRO_NEGOCIO_TELEFONE_RESIDENCIAL = "Favor inserir atributo parceiroNegocio.telefoneResidencial com tamanho limite: 15 caracteres.";
 
     public static final String PARCEIRO_NEGOCIO_INSCRICAO_INSS = "Favor inserir atributo parceiroNegocio.identificadorFiscal.inscricaoINSS com tamanho limite: 15 caracteres.";
@@ -217,4 +217,5 @@ public class Constantes {
 
     public static final String OBJETO_OBRIGATORIO_LINHA_UTILIZACAO = "Favor inserir atributo utilizacao do Objeto DocumentoLinhaAB ou utilizacao.id válido.";
 
+    public static final String OBJETO_NOTAFISCAL_DATA_VENCIMENTO_MENOR_DATA_DOCUMENTO = "Data de vencimento não pode ser inferior a data de documento no Objeto DocumentoAB. ";
 }
